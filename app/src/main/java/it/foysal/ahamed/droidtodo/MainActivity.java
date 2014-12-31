@@ -6,10 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
+    private Boolean greetingChanged = false;
+    private Button changeGreetingButton;
+    private EditText customGreeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,16 +22,41 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         final TextView greetingTextView = (TextView) findViewById(R.id.greetingTextView);
-        Button changeGreetingButton = (Button) findViewById(R.id.buttonChangeGreeting);
+        changeGreetingButton = (Button) findViewById(R.id.buttonChangeGreeting);
+        customGreeting = (EditText) findViewById(R.id.customGreetingInput);
 
         changeGreetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                greetingTextView.setText("Budu Budu Reee!");
+                changeGreeting(greetingTextView);
             }
         });
     }
 
+    public String getCustomGreetingInput() {
+        return String.valueOf(customGreeting.getText());
+    }
+
+    public Boolean hasCustomGreeting() {
+        return getCustomGreetingInput().length() > 0;
+    }
+
+    public void changeGreeting(TextView greetingView) {
+        String newString;
+
+        if (hasCustomGreeting()) {
+            newString = getCustomGreetingInput();
+        }else if (greetingChanged) {
+            newString = getString(R.string.greeting_text_budu_budu);
+        } else {
+            newString = getString(R.string.greeting_text_fish_lips);
+        }
+
+        greetingView.setText(newString);
+        greetingChanged = !greetingChanged;
+
+        Toast.makeText(this, "Greeting changed!", Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
