@@ -18,20 +18,28 @@
         android:layout_height="wrap_content"
         android:text="@string/button_change_greeting"
         android:id="@+id/buttonChangeGreeting"
-        android:layout_centerVertical="true"
         android:paddingTop="30dp"
         android:paddingBottom="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/customGreetingInput"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/customGreetingInput"
-        android:layout_alignEnd="@+id/buttonChangeGreeting"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
+        android:layout_below="@+id/greetingTextView"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/buttonChangeGreeting" />
+        android:layout_marginTop="66dp"
+        android:layout_alignEnd="@+id/buttonChangeGreeting" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/customGreetingsList"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/buttonChangeGreeting" />
 
 </RelativeLayout>

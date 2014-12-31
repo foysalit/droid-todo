@@ -5,16 +5,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
     private Boolean greetingChanged = false;
     private Button changeGreetingButton;
     private EditText customGreeting;
+
+    private ListView customGreetingListView;
+    private ArrayList<String> customGreetingsList = new ArrayList<String>();
+    private ArrayAdapter<String> customGreetingListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,11 @@ public class MainActivity extends ActionBarActivity {
         final TextView greetingTextView = (TextView) findViewById(R.id.greetingTextView);
         changeGreetingButton = (Button) findViewById(R.id.buttonChangeGreeting);
         customGreeting = (EditText) findViewById(R.id.customGreetingInput);
+
+        customGreetingListView = (ListView) findViewById(R.id.customGreetingsList);
+        customGreetingsList.add("Greeting default");
+        customGreetingListAdapter = new ArrayAdapter<String>(this, R.layout.custom_greeting_list_text, customGreetingsList);
+        customGreetingListView.setAdapter(customGreetingListAdapter);
 
         changeGreetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +59,8 @@ public class MainActivity extends ActionBarActivity {
 
         if (hasCustomGreeting()) {
             newString = getCustomGreetingInput();
+            customGreetingsList.add(newString);
+            customGreetingListAdapter.notifyDataSetChanged();
         }else if (greetingChanged) {
             newString = getString(R.string.greeting_text_budu_budu);
         } else {
