@@ -27,6 +27,7 @@ public class NotesApi extends AsyncTask<String, Void, Void> {
     private HttpClient httpClient = new DefaultHttpClient();
     public static String API_URL = "http://note-foysal.rhcloud.com/notes";
     private Context activityContext;
+    private static String LOG_TAG = "NOTE";
 
     public NotesApi(Context context) {
         this.activityContext = context;
@@ -78,11 +79,17 @@ public class NotesApi extends AsyncTask<String, Void, Void> {
         String response = callApi(httpget);
 
         if (response != null) {
+            Log.v(LOG_TAG, response);
+            ApiResponse apiResponse = new Gson().fromJson(response, ApiResponse.class);
+            Log.v(LOG_TAG, new Gson().toJson(apiResponse));
+            Log.v(LOG_TAG, ""+ apiResponse.data.size());
+            /*Log.v(LOG_TAG, apiResponse.data);
             Type noteType = new TypeToken<List<Note>>(){}.getType();
-            Log.v("NOTE", response);
-            Log.v("NOTE", noteType.toString());
-            List<Note> notes = new Gson().fromJson(response, noteType);
-            System.out.println(new Gson().toJson(notes));
+            Log.v(LOG_TAG, noteType.toString());
+            List<Note> notes = new Gson().fromJson(apiResponse.data, noteType);
+            Log.v(LOG_TAG, " "+ notes.size());*/
+
+            Log.v(LOG_TAG, apiResponse.data.get(0).title);
         }
 
         return null;
