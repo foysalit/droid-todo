@@ -2,7 +2,6 @@ package it.foysal.ahamed.droidtodo;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import it.foysal.ahamed.droidtodo.notes.NotesApi;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 changeGreeting(greetingTextView);
 
-                Notes NoteService = new Notes(MainActivity.this);
+                NotesApi NoteService = new NotesApi(MainActivity.this);
                 //NoteService.getAll();
                 NoteService.execute("test");
             }

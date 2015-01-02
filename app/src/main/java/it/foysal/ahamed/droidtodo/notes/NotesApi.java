@@ -1,12 +1,11 @@
-package it.foysal.ahamed.droidtodo;
+package it.foysal.ahamed.droidtodo.notes;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -18,16 +17,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Created by foysal on 01/01/15.
  */
-public class Notes extends AsyncTask<String, Void, Void> {
+public class NotesApi extends AsyncTask<String, Void, Void> {
     private HttpClient httpClient = new DefaultHttpClient();
     public static String API_URL = "http://note-foysal.rhcloud.com/notes";
     private Context activityContext;
 
-    Notes(Context context) {
+    public NotesApi(Context context) {
         this.activityContext = context;
     }
 
@@ -74,7 +75,16 @@ public class Notes extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... params) {
         HttpGet httpget = new HttpGet(API_URL);
-        callApi(httpget);
+        String response = callApi(httpget);
+
+        if (response != null) {
+            Type noteType = new TypeToken<List<Note>>(){}.getType();
+            Log.v("NOTE", response);
+            Log.v("NOTE", noteType.toString());
+            List<Note> notes = new Gson().fromJson(response, noteType);
+            System.out.println(new Gson().toJson(notes));
+        }
+
         return null;
     }
 }
